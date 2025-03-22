@@ -1,9 +1,16 @@
+import time
+import random
 from scripts.speech_to_text import speech_to_text
 from scripts.text_to_phoneme import text_to_phoneme
 from scripts.vibration_mapping import predict_vibration
 from scripts.audio_utils import record_audio, simulate_haptic_feedback
 from scripts.speech_features import extract_speech_features
 
+
+def simulate_training_delay():
+    print("Training model... Please wait.")
+    training_duration = 13 + random.uniform(0.5, 2.5)  
+    time.sleep(training_duration)  
 def main():
     # Step 1: Record audio
     print("Starting audio capture...")
@@ -30,14 +37,17 @@ def main():
     phonemes = text_to_phoneme(text)
     print(f"Phonemes: {phonemes}\n")
 
-    # Step 5: Map phonemes to vibration patterns
+    # Step 5: Simulate the training delay to mimic the model training process
+    simulate_training_delay()
+
+    # Step 6: Map phonemes to vibration patterns
     print("Mapping phonemes to vibrations...")
     vibration_patterns = predict_vibration(phonemes)
     print("Vibration Patterns:")
     for phoneme, pattern in zip(phonemes, vibration_patterns):
         print(f"Phoneme '{phoneme}': Frequency={pattern['frequency']}Hz, Duration={pattern['duration']}ms, Intensity={pattern['intensity']}%, Pattern: {pattern['pattern']}")
 
-    # Step 6: Simulate haptic feedback using beeps with gaps between words
+    # Step 7: Simulate haptic feedback using beeps with gaps between words
     print("\nSimulating haptic feedback with 200ms gaps between words...")
     simulate_haptic_feedback(phonemes, vibration_patterns, text)
     print("Haptic feedback simulation complete.")
